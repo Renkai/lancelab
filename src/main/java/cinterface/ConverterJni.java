@@ -1,5 +1,5 @@
 package cinterface;
 
 public class ConverterJni {
-    native public static Long[] getInt32Arr();
+    native public static long[] getInt32Arr();
 }

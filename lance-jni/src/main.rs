@@ -1,5 +1,6 @@
-use lance_jni::array;
+// use lance_jni::array;
+
 fn main() {
-    let res = array::array_example();
-    println!("Hello, world! {:?}", res);
+    // let res = array::array_example();
+    // println!("Hello, world! {:?}", res);
 }
