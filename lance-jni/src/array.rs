@@ -23,4 +23,5 @@ pub fn export_array_example() {
     // TODO fill them to JNI
     //https://docs.rs/arrow/33.0.0/arrow/ffi/index.html
     //https://arrow.apache.org/docs/java/cdata.html#java-to-c
+    //https://github.com/apache/arrow-rs/blob/3761ac53cab55c269b06d9a13825dd81b03e0c11/arrow/src/ffi.rs#L579-L580
 }
