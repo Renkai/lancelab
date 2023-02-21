@@ -20,6 +20,6 @@ pub extern "system" fn Java_cinterface_ConverterJni_getInt32Arr<'local>(
     class: JClass<'local>) -> jlongArray {
     let mut longArr = env.new_long_array(2).unwrap();
     let example = export_array_example();
-    env.set_long_array_region(longArr, 0, &example).unwrap();
+    env.set_long_array_region(&longArr, 0, &example).unwrap();
     longArr.as_raw()
 }
