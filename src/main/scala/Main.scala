@@ -1,5 +1,6 @@
+import cinterface.Converter
 object Main {
   def main(args: Array[String]): Unit = {
-    println("Hello world!")
+    Converter.getInt32ArrayExample()
   }
 }

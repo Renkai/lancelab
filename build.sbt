@@ -5,6 +5,8 @@ ThisBuild / scalaVersion := "2.13.10"
 lazy val root = (project in file("."))
   .settings(
     name := "lancelab",
+    run/ fork := true,
+    run / javaOptions += "-Djava.library.path=./lance-jni/target/debug/",
     libraryDependencies ++= Seq(
       "org.apache.arrow" % "arrow-c-data"       % "11.0.0",
       "org.apache.arrow" % "arrow-vector"       % "11.0.0",

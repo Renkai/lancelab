@@ -11,12 +11,12 @@ import org.apache.arrow.vector.FieldVector;
 public class Converter {
 
     static {
-        System.loadLibrary("lancelab");
+        System.loadLibrary("lance_jni");
     }
 
     public static void getInt32ArrayExample() {
         BufferAllocator allocator = new RootAllocator();
-        Long[] arr = ConverterJni.getInt32Arr();
+        long[] arr = ConverterJni.getInt32Arr();
         try (ArrowSchema arrowSchema = ArrowSchema.wrap(arr[0]); ArrowArray array = ArrowArray.wrap(arr[1])) {
             var vec = Data.importVector(allocator, array, arrowSchema, null);
             System.out.println("rust allocated array: " + vec);
