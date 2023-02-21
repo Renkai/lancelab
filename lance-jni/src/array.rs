@@ -29,8 +29,8 @@ pub fn export_array_example() -> [i64; 2] {
 
     let schema_ptr = &**schema as *const _;
     let array_ptr = &**array as *const _;
-    let schema_addr = schema_ptr.addr() as i64;
-    let array_addr = array_ptr.addr() as i64;
+    let schema_addr = schema_ptr as u64 as i64;
+    let array_addr = array_ptr as u64 as i64;
     [schema_addr, array_addr]
     //https://docs.rs/arrow/33.0.0/arrow/ffi/index.html
     //https://arrow.apache.org/docs/java/cdata.html#java-to-c
