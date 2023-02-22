@@ -1,6 +1,6 @@
 use std::mem::ManuallyDrop;
-use arrow::array::{Array, Int32Array};
-use arrow::ffi::FFI_ArrowSchema;
+use arrow::array::{Array, ArrayData, Int32Array};
+use arrow::ffi::{ArrowArray, FFI_ArrowSchema};
 use arrow::ffi::FFI_ArrowArray;
 
 pub fn array_example() -> Int32Array
@@ -31,6 +31,18 @@ pub fn export_array_example() -> [i64; 2] {
     let array_ptr = &**array as *const _;
     let schema_addr = schema_ptr as i64;
     let array_addr = array_ptr as i64;
+
+    let schema_addr2 = schema_addr as *const FFI_ArrowSchema;
+    let array_addr2 = array_addr as *const FFI_ArrowArray;
+    let array = unsafe {
+        ArrowArray::new(std::ptr::read(array_addr2), std::ptr::read(schema_addr2))
+    };
+
+    let array = Int32Array::from(ArrayData::try_from(array).unwrap());
+    println!("pointer schema as long: {}", schema_addr);
+    println!("pointer array as long: {}", array_addr);
+    println!("recovered arr: {:?}",array);
+
     [schema_addr, array_addr]
     //https://docs.rs/arrow/33.0.0/arrow/ffi/index.html
     //https://arrow.apache.org/docs/java/cdata.html#java-to-c

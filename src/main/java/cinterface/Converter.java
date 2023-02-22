@@ -23,9 +23,5 @@ public class Converter {
         ArrowSchema arrowSchema = ArrowSchema.wrap(arr[0]);
         ArrowArray array = ArrowArray.wrap(arr[1]);
         var vec = Data.importVector(allocator, array, arrowSchema, null);
-//        try () {
-//            var vec = Data.importVector(allocator, array, arrowSchema, null);
-//            System.out.println("rust allocated array: " + vec);
-//        }
     }
 }
