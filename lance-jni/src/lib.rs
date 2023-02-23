@@ -11,15 +11,14 @@ use jni::objects::{JClass, JLongArray, JString};
 // This is just a pointer. We'll be returning it from our function. We
 // can't return one of the objects with lifetime information because the
 // lifetime checker won't let us.
-use jni::sys::{jlongArray, jobjectArray, jstring};
-use crate::array::export_array_example;
+use jni::sys::{jlong, jlongArray, jobjectArray, jstring};
+use crate::array::{export_array_example, export_example2};
 
 #[no_mangle]
-pub extern "system" fn Java_cinterface_ConverterJni_getInt32Arr<'local>(
+pub extern "system" fn Java_cinterface_ConverterJni_fill_1arr<'local>(
     mut env: JNIEnv<'local>,
-    class: JClass<'local>) -> jlongArray {
-    let mut longArr = env.new_long_array(2).unwrap();
-    let example = export_array_example();
-    env.set_long_array_region(&longArr, 0, &example).unwrap();
-    longArr.as_raw()
+    class: JClass<'local>,
+    arr_addr: jlong,
+    schema_addr: jlong) {
+    export_example2(arr_addr,schema_addr)
 }

@@ -16,12 +16,10 @@ public class Converter {
 
     public static void getInt32ArrayExample() {
         BufferAllocator allocator = new RootAllocator();
-        ConverterJni.getInt32Arr();
-        long[] arr = ConverterJni.getInt32Arr();
-        System.out.println(arr[0]);
-        System.out.println(arr[1]);
-        ArrowSchema arrowSchema = ArrowSchema.wrap(arr[0]);
-        ArrowArray array = ArrowArray.wrap(arr[1]);
-        var vec = Data.importVector(allocator, array, arrowSchema, null);
+        ArrowSchema arrowSchema = ArrowSchema.allocateNew(allocator);
+        ArrowArray arrowArray = ArrowArray.allocateNew(allocator);
+        ConverterJni.fill_arr(arrowArray.memoryAddress(), arrowSchema.memoryAddress());
+        var vector = Data.importVector(allocator, arrowArray, arrowSchema, null);
+        System.out.println("Rust allocated array: " + vector);
     }
 }

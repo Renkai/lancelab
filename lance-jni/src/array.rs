@@ -1,5 +1,6 @@
 use std::mem::ManuallyDrop;
-use arrow::array::{Array, ArrayData, Int32Array};
+use arrow::array::{Array, ArrayData, export_array_into_raw, Int32Array, make_array};
+use arrow::ffi;
 use arrow::ffi::{ArrowArray, FFI_ArrowSchema};
 use arrow::ffi::FFI_ArrowArray;
 
@@ -16,7 +17,15 @@ pub fn array_example() -> Int32Array
     array
 }
 
+pub fn export_example2(arr_addr: i64, schema_addr: i64) {
+    let array = make_array(array_example().into_data());
+    let arr_addr = arr_addr as *mut ffi::FFI_ArrowArray;
+    let schema_addr = schema_addr as *mut ffi::FFI_ArrowSchema;
+    unsafe { export_array_into_raw(array, arr_addr, schema_addr).unwrap() }
+}
+
 pub fn export_array_example() -> [i64; 2] {
+    //It doesn't work, keep for study
     // Export it
     let array = array_example();
     let data = array.data();
@@ -41,7 +50,7 @@ pub fn export_array_example() -> [i64; 2] {
     let array = Int32Array::from(ArrayData::try_from(array).unwrap());
     println!("pointer schema as long: {}", schema_addr);
     println!("pointer array as long: {}", array_addr);
-    println!("recovered arr: {:?}",array);
+    println!("recovered arr: {:?}", array);
 
     [schema_addr, array_addr]
     //https://docs.rs/arrow/33.0.0/arrow/ffi/index.html
